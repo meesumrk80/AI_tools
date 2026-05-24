@@ -1,6 +1,7 @@
 import pickle
 import pandas as pd
 import numpy as np
+from functools import lru_cache
 from typing import Optional
 
 from fastapi import FastAPI
@@ -29,8 +30,9 @@ df["Popularity_Votes"] = pd.to_numeric(df.get("Popularity_Votes", 0), errors="co
 with open("embeddings.pkl", "rb") as f:
     embeddings = pickle.load(f)
 
-# Load semantic model
-model = SentenceTransformer('all-MiniLM-L6-v2')
+@lru_cache(maxsize=1)
+def get_model():
+    return SentenceTransformer('all-MiniLM-L6-v2')
 
 
 @app.get("/")
@@ -44,7 +46,7 @@ def home():
 def search(query: str):
 
     # Convert user query to embedding
-    query_embedding = model.encode([query])
+    query_embedding = get_model().encode([query])
 
     # Calculate similarity
     similarity_scores = cosine_similarity(

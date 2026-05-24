@@ -1,0 +1,42 @@
+AI Tool Recommender - Project Explanation
+
+1. What this project does
+This project is an AI tool discovery app. It helps users search for AI tools by task, inspect trending tools, and browse filtered tool lists. The backend provides the data and recommendation logic, while the React frontend provides the interface.
+
+2. Backend flow
+The backend is in app.py. It loads tools.pkl as the main dataset and embeddings.pkl for semantic search. The /search endpoint converts a user query into an embedding, compares it with the saved tool embeddings using cosine similarity, and returns the best matches. The /categories, /trendings, /top-tools, and /tools endpoints return structured lists from the same dataset with optional filters.
+
+3. Frontend flow
+The React app is in frontend/ai-tool-recommender. main.jsx mounts the app inside BrowserRouter. App.jsx defines the layout and routes for Search, Categories, Trendings, Top Tools, and All Tools. Sidebar.jsx handles navigation and theme switching. Each page component fetches data from the backend through src/api.js.
+
+4. Styling and interactions
+The styling is split between src/index.css and src/App.css. The app uses glass-style panels, gradient backgrounds, animated ambient blobs, hover lift effects, rounded cards, and responsive layouts. The theme toggle writes a data-theme value to the document root so the UI can switch between dark and light modes.
+
+5. Important files
+app.py: API server and recommendation logic.
+tools.pkl: dataset used by the API.
+embeddings.pkl: precomputed semantic embeddings.
+frontend/ai-tool-recommender/src/App.jsx: main layout and routes.
+frontend/ai-tool-recommender/src/components/Sidebar.jsx: navigation and theme toggle.
+frontend/ai-tool-recommender/src/pages/*: feature pages.
+
+6. Notes
+The runtime app depends on app.py, tools.pkl, embeddings.pkl, and the React frontend. The deleted SVG/demo files were unused sample assets.
+
+
+
+To run projest 
+
+
+you have to update paths
+
+For Backend:
+
+cd "c:\Users\............\AI_tools-main\AI_tools-main"
+python -m uvicorn app:app --host 127.0.0.1 --port 8000
+
+For Frontend:
+
+cd "c:\Users\.........\AI_tools-main\AI_tools-main\frontend\ai-tool-recommender"
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
